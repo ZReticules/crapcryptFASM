@@ -2,8 +2,8 @@ format pe64 console
 
 entry main
 
-include "win64ax.inc"
-include "mcall\mcall64.inc"
+include "win64ax.inc" 
+include "FASM_OOP\FASM_OOP.inc"
 
 section ".src" readable writeable executable
 	include "TOOLS\ParseCMD.asm"

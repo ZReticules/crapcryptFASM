@@ -1,6 +1,5 @@
-struct sha256Blocks, table
+struct sha256Blocks
 	printBlocks method this
-endt
 	bCount dq ?
 	blocksLp dq ?
 ends
