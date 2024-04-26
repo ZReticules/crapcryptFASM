@@ -90,11 +90,11 @@ section ".code" readable writeable executable
 		@call sha256(sha256Hash, rax)
 		@call printHash(sha256Hash)
 		@call [ExitProcess](0)
-	endp
 
 	ErrorOut:
-		@call [printf]("Something went wrong.")
+		@call [printf]("Something went wrong. Argcount equ %d", [argc])
 		@call [ExitProcess](0)
+	endp
 
 section "idata" import readable writeable
 	library kernel32, "kernel32.dll",\
