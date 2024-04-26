@@ -92,7 +92,8 @@ section ".code" readable writeable executable
 		@call [ExitProcess](0)
 
 	ErrorOut:
-		@call [printf]("Something went wrong. Argcount equ %d", [argc])
+		mov rbx, [argv]
+		@call [printf]("Something went wrong. Firstarg equ %s", qword[rbx])
 		@call [ExitProcess](0)
 	endp
 
