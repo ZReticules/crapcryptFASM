@@ -45,6 +45,8 @@ section ".code" readable writeable executable
 
 	proc main
 		local argc:DWORD, argv:QWORD
+		@call [GetCommandLineA]()
+		@call [printf](<"%s", 0Ah>,rax)
 		@call ParseCommandLine(addr argv)
 		mov [argc], eax
 		dec eax
