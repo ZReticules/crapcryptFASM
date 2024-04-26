@@ -45,8 +45,6 @@ section ".code" readable writeable executable
 
 	proc main
 		local argc:DWORD, argv:QWORD
-		@call [GetCommandLineA]()
-		@call [printf](<"%s", 0Ah>,rax)
 		@call ParseCommandLine(addr argv)
 		mov [argc], eax
 		dec eax
@@ -94,14 +92,14 @@ section ".code" readable writeable executable
 		@call [ExitProcess](0)
 
 	ErrorOut:
-		@call [printf](<"Something went wrong. Args:", 0Ah>)
-		mov rsi, [argv]
-		xor rbx, rbx
-		@@:
-			@call [printf](<"%d. %s", 0Ah>, addr rbx+1, qword[rsi+rbx*8])
-		inc rbx
-		cmp ebx, [argc]
-		jb @b
+		@call [printf]("Something went wrong.")
+		; mov rsi, [argv]
+		; xor rbx, rbx
+		; @@:
+		; 	@call [printf](<"%d. %s", 0Ah>, addr rbx+1, qword[rsi+rbx*8])
+		; inc rbx
+		; cmp ebx, [argc]
+		; jb @b
 		@call [ExitProcess](0)
 	endp
 

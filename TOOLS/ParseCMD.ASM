@@ -19,11 +19,14 @@ local lpargmem:QWORD
 		.noquotes:
 		cmp r8d, " "
 		jne .NoSpace
+			cmp byte[rdx+rcx-1], 0
+				je .SpaceSeries			;серия пробелов
 			push rdx
+			inc ebx
+			.SpaceSeries:
 			lea rdx, [rdx+rcx+1]
 			mov byte [rdx-1], 0
 			mov rcx, -1
-			inc ebx
 		.NoSpace:
 		inc rcx
 	cmp r8d, 0
@@ -31,18 +34,14 @@ local lpargmem:QWORD
 	push rdx
 	@call [malloc](addr rbx*8)
 	mov [lpargmem], rax
-	cmp rbx, 1
+	cmp rbx, 0
 	je .noargs
-		dec rbx
 		mov rcx, rbx
 		@@:
 			pop qword[rax+(rcx-1)*8]
-			dec rcx
-		cmp rcx, 1
-		ja @b
-		pop rcx
+		dec rcx
+		jnz @b
 	.noargs:
-	pop qword[rax]
 	mov rdx, [lpargmem]
 	mov rcx, [argvLp]
 	mov [rcx], rdx
