@@ -92,8 +92,14 @@ section ".code" readable writeable executable
 		@call [ExitProcess](0)
 
 	ErrorOut:
-		mov rbx, [argv]
-		@call [printf]("Something went wrong. Firstarg equ %s", qword[rbx])
+		@call [printf](<"Something went wrong. Args:", 0Ah>)
+		mov rsi, [argv]
+		xor rbx, rbx
+		@@:
+			@call [printf](<"%d. %s", 0Ah>, addr rbx+1, qword[rsi+rbx*8])
+		inc rbx
+		cmp ebx, [argc]
+		jb @b
 		@call [ExitProcess](0)
 	endp
 
